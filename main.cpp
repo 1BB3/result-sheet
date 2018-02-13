@@ -67,7 +67,6 @@ void make_header_0th_line(){
     int indt = (total - strlen(mksobt));
     int lindt = indt/2;
     int rindt = (indt%2==0)?lindt:lindt + 1;
-    printf("\n\n%d %d %d %d\n\n",total,indt,lindt,rindt);
     printf("|");for(int i=0;i<lindt;i++)printf("-");printf("%s",mksobt);for(int i=0;i<rindt;i++)printf("-");
     printf("|\n");
 }
@@ -190,7 +189,13 @@ int input_marks(){
     int number_of_students;
     printf("Enter the number of students : ");
     scanf("%d",&number_of_students);
+
+    #ifdef linux 
+    system("clear");
+    #endif
+    #ifdef _WIN32
     system("cls");
+    #endif
 
     for(int i=0;i<number_of_students;i++){
         printf("Studen No. %d\n\n",i+1);
@@ -234,10 +239,22 @@ int input_marks(){
         scanf("%d",&stdt[i].mksobt.bee);
         }while(!is_input_valid(46,i));
         
-        system("cls");
+    #ifdef linux 
+    system("clear");
+    #endif
+    #ifdef _WIN32
+    system("cls");
+    #endif
     }
     printf("\n");
+
+    #ifdef linux 
+    system("clear");
+    #endif
+    #ifdef _WIN32
     system("cls");
+    #endif
+    
     return number_of_students;
 }
 
