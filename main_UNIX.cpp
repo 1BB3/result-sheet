@@ -13,7 +13,7 @@ struct student{
     struct marks_obtained mksobt;
     int total;
     char result[5];
-    int percentage;
+    float percentage;
     char div[7];
     char remark[11];
 };
@@ -33,7 +33,7 @@ struct indentaions{
     int bee = 8;
     int total = 8;
     int result = 8;
-    int percentage = 6;
+    int percentage = 8;
     int div = 5;
     int remark = 8;
 }indent;
@@ -64,10 +64,10 @@ void make_header(const char *input_string, int space){
 void make_header_0th_line(){
     int total = indent.sn + indent.name + indent.level + indent.cprog + indent.apmech + indent.egdrg + indent.egmath + indent.egphy + indent.bee + indent.total + indent.result + indent.percentage + indent.div + indent.remark + 13;  
     char mksobt[] =  "Result Sheet";
-    int indt = (total - strlen(mksobt))/2;
-    int lindt = indt;
+    int indt = (total - strlen(mksobt));
+    int lindt = indt/2;
     int rindt = (indt%2==0)?lindt:lindt + 1;
-
+    printf("\n\n%d %d %d %d\n\n",total,indt,lindt,rindt);
     printf("|");for(int i=0;i<lindt;i++)printf("-");printf("%s",mksobt);for(int i=0;i<rindt;i++)printf("-");
     printf("|\n");
 }
@@ -78,8 +78,8 @@ void make_header_1st_line(){
 
     int total = indent.cprog + indent.apmech + indent.egdrg + indent.egmath + indent.egphy + indent.bee + 5;  
     char mksobt[] =  "Marks Obtained";
-    int indt = (total - strlen(mksobt))/2;
-    int lindt = indt;
+    int indt = (total - strlen(mksobt));
+    int lindt = indt/2;
     int rindt = (indt%2==0)?lindt:lindt + 1;
 
     printf("|");for(int i=0;i<lindt;i++)printf("-");printf("%s",mksobt);for(int i=0;i<rindt;i++)printf("-");
@@ -249,6 +249,12 @@ int no_of_digits(int num){
 
 }
 
+int no_of_digits_percentage(float num){
+    if(num < 10.00)return 4;
+    if(num < 100.00)return 5;
+    if(num = 100.00)return 6;
+}
+
 void make_content(int nos){
     printf("|%d",stdt[nos].sn);for(int i = 0;i<indent.sn-no_of_digits(stdt[nos].sn);i++)printf(" ");
     printf("|%s",stdt[nos].name);for(int i = 0;i<indent.name-strlen(stdt[nos].name);i++)printf(" ");
@@ -261,7 +267,7 @@ void make_content(int nos){
     printf("|%d",stdt[nos].mksobt.bee);for(int i = 0;i<indent.bee-no_of_digits(stdt[nos].mksobt.bee);i++)printf(" ");
     printf("|%d",stdt[nos].total);for(int i = 0;i<indent.total-no_of_digits(stdt[nos].total);i++)printf(" ");
     printf("|%s",stdt[nos].result);for(int i = 0;i<indent.result-strlen(stdt[nos].result);i++)printf(" ");
-    printf("|%d",stdt[nos].percentage);for(int i = 0;i<indent.percentage-no_of_digits(stdt[nos].percentage);i++)printf(" ");   
+    printf("|%.2f",stdt[nos].percentage);for(int i = 0;i<indent.percentage-no_of_digits_percentage(stdt[nos].percentage);i++)printf(" ");   
     printf("|%s",stdt[nos].div);for(int i = 0;i<indent.div-strlen(stdt[nos].div);i++)printf(" ");
     printf("|%s",stdt[nos].result);for(int i = 0;i<indent.result-strlen(stdt[nos].result);i++)printf(" ");
     printf("|\n");
@@ -270,7 +276,7 @@ void make_content(int nos){
 void process_data(int nos){
     for(int i = 0;i<nos;i++){
         stdt[i].total = stdt[i].mksobt.cprog + stdt[i].mksobt.apmech + stdt[i].mksobt.egdrg + stdt[i].mksobt.egmath + stdt[i].mksobt.egphy + stdt[i].mksobt.bee;
-        stdt[i].percentage = stdt[i].total/6;
+        stdt[i].percentage = stdt[i].total/6.0;
 
         if(stdt[i].percentage>74){
             strcpy(stdt[i].div,"Dist.");
