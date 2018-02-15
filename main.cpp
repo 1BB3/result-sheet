@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define disp()
+
 struct marks_obtained{
         int cprog,apmech,egdrg,egmath,egphy,bee;
 };
@@ -21,7 +23,7 @@ struct student{
 struct student stdt[48];
 
 
-struct indentaions{                          
+struct indentaions{
     int sn = 12;
     int name = 12;
     int level = 7;
@@ -36,23 +38,16 @@ struct indentaions{
     int percentage = 8;
     int div = 5;
     int remark = 8;
+    int* _ind;
 }indent;
 
 void make_horizontal_line(){
-    printf("|");for(int i=0;i<indent.sn;i++)printf("-");
-    printf("|");for(int i=0;i<indent.name;i++)printf("-");
-    printf("|");for(int i=0;i<indent.level;i++)printf("-");
-    printf("|");for(int i=0;i<indent.cprog;i++)printf("-");
-    printf("|");for(int i=0;i<indent.apmech;i++)printf("-");
-    printf("|");for(int i=0;i<indent.egmath;i++)printf("-");
-    printf("|");for(int i=0;i<indent.egphy;i++)printf("-");
-    printf("|");for(int i=0;i<indent.egdrg;i++)printf("-");
-    printf("|");for(int i=0;i<indent.bee;i++)printf("-");
-    printf("|");for(int i=0;i<indent.total;i++)printf("-");
-    printf("|");for(int i=0;i<indent.result;i++)printf("-");
-    printf("|");for(int i=0;i<indent.percentage;i++)printf("-");
-    printf("|");for(int i=0;i<indent.div;i++)printf("-");
-    printf("|");for(int i=0;i<indent.remark;i++)printf("-");
+    indent._ind = &(indent.sn);
+    for(int i = 0; i<14; i++, indent._ind++){
+        printf("|");
+        for(int j = 0; j<*(indent._ind); j++)
+            printf("-");
+    }
     printf("|\n");
 }
 
@@ -62,7 +57,7 @@ void make_header(const char *input_string, int space){
 }
 
 void make_header_0th_line(){
-    int total = indent.sn + indent.name + indent.level + indent.cprog + indent.apmech + indent.egdrg + indent.egmath + indent.egphy + indent.bee + indent.total + indent.result + indent.percentage + indent.div + indent.remark + 13;  
+    int total = indent.sn + indent.name + indent.level + indent.cprog + indent.apmech + indent.egdrg + indent.egmath + indent.egphy + indent.bee + indent.total + indent.result + indent.percentage + indent.div + indent.remark + 13;
     char mksobt[] =  "Result Sheet";
     int indt = (total - strlen(mksobt));
     int lindt = indt/2;
@@ -75,7 +70,7 @@ void make_header_1st_line(){
     printf("|");for(int i=0;i<indent.name;i++)printf("-");
     printf("|");for(int i=0;i<indent.level;i++)printf("-");
 
-    int total = indent.cprog + indent.apmech + indent.egdrg + indent.egmath + indent.egphy + indent.bee + 5;  
+    int total = indent.cprog + indent.apmech + indent.egdrg + indent.egmath + indent.egphy + indent.bee + 5;
     char mksobt[] =  "Marks Obtained";
     int indt = (total - strlen(mksobt));
     int lindt = indt/2;
@@ -83,36 +78,26 @@ void make_header_1st_line(){
 
     printf("|");for(int i=0;i<lindt;i++)printf("-");printf("%s",mksobt);for(int i=0;i<rindt;i++)printf("-");
 
-
-    printf("|");for(int i=0;i<indent.total;i++)printf("-");
-    printf("|");for(int i=0;i<indent.result;i++)printf("-");
-    printf("|");for(int i=0;i<indent.percentage;i++)printf("-");
-    printf("|");for(int i=0;i<indent.div;i++)printf("-");
-    printf("|");for(int i=0;i<indent.remark;i++)printf("-");
+    indent._ind = &(indent.total);
+    for(int i = 0; i<5; i++, indent._ind++){
+        printf("|");
+        for(int j = 0; j<*(indent._ind); j++)
+            printf("-");
+    }
     printf("|\n");
 }
 
 void make_empty_line(){
-    int total = indent.sn + indent.name + indent.level + indent.cprog + indent.apmech + indent.egdrg + indent.egmath + indent.egphy + indent.bee + indent.total + indent.result + indent.percentage + indent.div + indent.remark + 13;  
+    int total = indent.sn + indent.name + indent.level + indent.cprog + indent.apmech + indent.egdrg + indent.egmath + indent.egphy + indent.bee + indent.total + indent.result + indent.percentage + indent.div + indent.remark + 13;
     printf("|");for(int i=0;i<total;i++)printf(" ");
     printf("|\n");
 
 }
 void make_header_2nd_line(){
-    make_header("Symbol No.",indent.sn);
-    make_header("Name",indent.name);
-    make_header("Level",indent.level);
-    make_header("C-Prog",indent.cprog);
-    make_header("ApMech",indent.apmech);
-    make_header("EnMath",indent.egmath);
-    make_header("EnPhy",indent.egphy);
-    make_header("EnDrg",indent.egdrg);
-    make_header("BEE",indent.bee);
-    make_header("Total",indent.total);
-    make_header("Result",indent.result);
-    make_header("\%",indent.percentage);
-    make_header("Div",indent.div);
-    make_header("Remark",indent.remark);
+    const char heading[14][11] = {"Symbol No.", "Name", "Level", "C-Prog", "ApMech", "EnMath", "EnPhy", "EnDrg", "BEE", "Total", "Result", "\%", "Div", "Remark"};
+    indent._ind = &(indent.sn);
+    for(int i = 0; i<14; i++)
+        make_header(heading[i], *(indent._ind++));
     printf("|\n");
 }
 
@@ -190,7 +175,7 @@ int input_marks(){
     printf("Enter the number of students : ");
     scanf("%d",&number_of_students);
 
-    #ifdef linux 
+    #ifdef linux
     system("clear");
     #endif
     #ifdef _WIN32
@@ -211,7 +196,7 @@ int input_marks(){
         printf("Level ? ");
         scanf("%s",stdt[i].level);
         }while(!is_input_valid(3,i));
-        
+
         printf("Marks Obtained in : \n");
 
         do{
@@ -238,8 +223,8 @@ int input_marks(){
         printf("    Basic Electrical Engineering ? ");
         scanf("%d",&stdt[i].mksobt.bee);
         }while(!is_input_valid(46,i));
-        
-    #ifdef linux 
+
+    #ifdef linux
     system("clear");
     #endif
     #ifdef _WIN32
@@ -248,13 +233,13 @@ int input_marks(){
     }
     printf("\n");
 
-    #ifdef linux 
+    #ifdef linux
     system("clear");
     #endif
     #ifdef _WIN32
     system("cls");
     #endif
-    
+
     return number_of_students;
 }
 
@@ -284,7 +269,7 @@ void make_content(int nos){
     printf("|%d",stdt[nos].mksobt.bee);for(int i = 0;i<indent.bee-no_of_digits(stdt[nos].mksobt.bee);i++)printf(" ");
     printf("|%d",stdt[nos].total);for(int i = 0;i<indent.total-no_of_digits(stdt[nos].total);i++)printf(" ");
     printf("|%s",stdt[nos].result);for(int i = 0;i<indent.result-strlen(stdt[nos].result);i++)printf(" ");
-    printf("|%.2f",stdt[nos].percentage);for(int i = 0;i<indent.percentage-no_of_digits_percentage(stdt[nos].percentage);i++)printf(" ");   
+    printf("|%.2f",stdt[nos].percentage);for(int i = 0;i<indent.percentage-no_of_digits_percentage(stdt[nos].percentage);i++)printf(" ");
     printf("|%s",stdt[nos].div);for(int i = 0;i<indent.div-strlen(stdt[nos].div);i++)printf(" ");
     printf("|%s",stdt[nos].result);for(int i = 0;i<indent.result-strlen(stdt[nos].result);i++)printf(" ");
     printf("|\n");
@@ -300,16 +285,16 @@ void process_data(int nos){
             strcpy(stdt[i].result,"PASS");
         }else if(stdt[i].percentage>59){
             strcpy(stdt[i].div,"1st");
-            strcpy(stdt[i].result,"PASS");  
+            strcpy(stdt[i].result,"PASS");
         }else if(stdt[i].percentage>49){
             strcpy(stdt[i].div,"2nd");
-            strcpy(stdt[i].result,"PASS");   
+            strcpy(stdt[i].result,"PASS");
         }else if(stdt[i].percentage>39){
             strcpy(stdt[i].div,"3rd");
-            strcpy(stdt[i].result,"PASS");   
+            strcpy(stdt[i].result,"PASS");
         }else{
             strcpy(stdt[i].div,"4th");
-            strcpy(stdt[i].result,"FAIL");  
+            strcpy(stdt[i].result,"FAIL");
         }
 
         if(stdt[i].mksobt.cprog<40 || stdt[i].mksobt.apmech<40 || stdt[i].mksobt.egdrg<40 || stdt[i].mksobt.egmath<40 || stdt[i].mksobt.egphy<40 || stdt[i].mksobt.bee<40){
@@ -339,4 +324,3 @@ main(){
     make_horizontal_line();
     printf("\n\n");
 }
-
