@@ -284,7 +284,7 @@ void process_data(int nos){
 
 }
 
-main(){
+int main(){
     printf("\n");
     int number_of_students = input_marks();
     process_data(number_of_students);
@@ -299,4 +299,5 @@ main(){
     }
     make_horizontal_line();
     printf("\n\n");
+    return 1;
 }
